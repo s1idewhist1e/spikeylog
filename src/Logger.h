@@ -9,8 +9,7 @@ namespace spikeylog {
 	class Logger : public ILogger
 	{
 	public:
-		void setLogLevel(LogLevel l);
-		void log(std::string const& string, std::optional<LogLevel> logLevel);
+		void log(std::string const& string, LogLevel logLevel);
 		void enableLogLevel(LogLevel level, int outId);
 		void disableLogLevel(LogLevel level, int outId);
 		Logger(std::ostream& out, std::ostream& err = std::cout);

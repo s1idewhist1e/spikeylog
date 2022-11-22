@@ -2,18 +2,14 @@
 #include <ctime>
 
 namespace spikeylog {
-	void Logger::setLogLevel(LogLevel l) {
 
-	}
+	void Logger::log(std::string const& string, LogLevel logLevel) {
 
-	void Logger::log(std::string const& string, std::optional<LogLevel> logLevel) {
-
-		LogLevel level = logLevel.value_or(this->logLevel);
 		std::ostream* stream;
-		if ((uint8_t)level & errLevels) {
+		if ((uint8_t)logLevel & errLevels) {
 			stream = &m_err;
 		}
-		else if ((uint8_t)level & outLevels)
+		else if ((uint8_t)logLevel & outLevels)
 		{
 			stream = &m_out;
 		}
@@ -22,15 +18,18 @@ namespace spikeylog {
 		}
 
 		time_t now = time(0);
-		tm* ltm = localtime(&now);
+		tm ltm;
+		localtime_s(&ltm, &now);
+
+		char time[9];
+		snprintf(time, 9, "%02d:%02d:%02d", ltm.tm_hour, ltm.tm_min, ltm.tm_sec);
 
 		*stream 
 			<< "\x1B[90;40m"
-			<< ltm->tm_hour << ":" 
-			<< ltm->tm_min << ":" 
-			<< ltm->tm_sec << " \x1b[0m";
+			<< time 
+			<< " \x1b[0m";
 
-		switch (level) {
+		switch (logLevel) {
 		case LogLevel::TRACE:
 			*stream << "\x1B[90;40m[TRACE] ";
 			break;
