@@ -18,11 +18,9 @@ namespace spikeylog {
 		}
 
 		time_t now = time(0);
-		tm ltm;
-		localtime_s(&ltm, &now);
-
+		tm* ltm = std::localtime(&now);
 		char time[9];
-		snprintf(time, 9, "%02d:%02d:%02d", ltm.tm_hour, ltm.tm_min, ltm.tm_sec);
+		snprintf(time, 9, "%02d:%02d:%02d", ltm->tm_hour, ltm->tm_min, ltm->tm_sec);
 
 		*stream 
 			<< "\x1B[90;40m"
