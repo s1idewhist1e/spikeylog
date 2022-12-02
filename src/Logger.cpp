@@ -22,6 +22,7 @@ namespace spikeylog {
 		char time[9];
 		snprintf(time, 9, "%02d:%02d:%02d", ltm->tm_hour, ltm->tm_min, ltm->tm_sec);
 
+		std::lock_guard<std::mutex> guard(mtx);
 		*stream 
 			<< "\x1B[90;40m"
 			<< time 

@@ -4,6 +4,7 @@
 
 #include "ILogger.h"
 #include <iostream>
+#include <mutex>
 
 namespace spikeylog {
 	class Logger : public ILogger
@@ -15,6 +16,7 @@ namespace spikeylog {
 		Logger(std::ostream& out, std::ostream& err = std::cout);
 		virtual ~Logger();
 	private:
+		std::mutex mtx;
 		uint8_t outLevels;
 		uint8_t errLevels;
 		LogLevel logLevel;
