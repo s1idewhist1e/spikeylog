@@ -24,28 +24,28 @@ namespace spikeylog {
 
 		std::lock_guard<std::mutex> guard(mtx);
 		*stream 
-			<< "\x1B[90;40m"
+			<< "\x1B[90m"
 			<< time 
 			<< " \x1b[0m";
 
 		switch (logLevel) {
 		case LogLevel::TRACE:
-			*stream << "\x1B[90;40m[TRACE] ";
+			*stream << "\x1B[90m[TRACE] ";
 			break;
 		case LogLevel::DEBUG:
-			*stream << "\x1B[97;40m[DEBUG] ";
+			*stream << "\x1B[97m[DEBUG] ";
 			break;
 		case LogLevel::INFO:
-			*stream << "\x1B[37;40m[INFO] ";
+			*stream << "\x1B[37m[INFO] ";
 			break;
 		case LogLevel::WARN:
-			*stream << "\x1B[33;40m[WARN] ";
+			*stream << "\x1B[33m[WARN] ";
 			break;
 		case LogLevel::ERROR:
-			*stream << "\x1B[91;40m[ERROR] ";
+			*stream << "\x1B[91m[ERROR] ";
 			break;
 		case LogLevel::FATAL:
-			*stream << "\x1B[31;40m[FATAL] ";
+			*stream << "\x1B[31m[FATAL] ";
 			break;
 		}
 		*stream << string << "\x1B[0m" << std::endl;
